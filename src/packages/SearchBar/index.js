@@ -30,10 +30,10 @@ const Input =
         box-sizing: border-box;
         width: 50px;
         height: 50px;
-        border: 4px solid #FFFFFF;
+        border: 4px solid ${({ color }) => color};
         border-radius: 50%;
         background: none;
-        color: #fff;
+        color: ${({ color }) => color};
         font-size: 16px;
         font-weight: 400;
         font-family: Roboto;
@@ -53,10 +53,10 @@ const Input =
                 padding: 0 40px 0 10px;
                 width: 300px;
                 height: 50px;
-                border: 4px solid #FFFFFF;
+                border: 4px solid ${({ color }) => color};
                 border-radius: 0;
                 background: none;
-                color: #fff;
+                color: ${({color}) => color};
                 font-family: Roboto;
                 font-size: 16px;
                 font-weight: 400;
@@ -97,7 +97,7 @@ const Button =
             position: absolute;
             width: 20px;
             height: 4px;
-            background-color: #fff;
+            background-color: ${({color}) => color};
             -webkit-transform: rotate(45deg);
             -ms-transform: rotate(45deg);
             transform: rotate(45deg);
@@ -108,8 +108,7 @@ const Button =
             
         ${({ buttonState }) => {
             if (buttonState == STATE_CLOSED) {
-                return `color: green;
-                        -webkit-transition: 0.4s ease-in-out;
+                return `-webkit-transition: 0.4s ease-in-out;
                         transition: 0.4s ease-in-out;
                         -webkit-transition-delay: 0.4s;
                         transition-delay: 0.4s;
@@ -121,32 +120,32 @@ const Button =
                             height: 4px;
                             margin-top: -1px;
                             margin-left: -13px;
-                            background-color: #fff;
+                            background-color: ${({color}) => color};
                             -webkit-transform: rotate(45deg);
                             -ms-transform: rotate(45deg);
                             transform: rotate(45deg);
                             -webkit-transition: 0.2s ease-in-out;
                             transition: 0.2s ease-in-out;
                         }
-                        
+
                         &:after {
                             content: "";
                             position: absolute;
                             width: 27px;
                             height: 4px;
-                            background-color: #fff;
+                            background-color: ${({color}) => color};
                             margin-top: -1px;
                             margin-left: -13px;
                             cursor: pointer;
                             -webkit-transform: rotate(-45deg);
                             -ms-transform: rotate(-45deg);
                             transform: rotate(-45deg);
-                        }`
+                        }`;
             }
         }}`;
 
 
-const SearchBar = () => {
+const SearchBar = ({ color = '#fff' }) => {
     const [inputState, setInputState] = useState(STATE_DEFAULT);
     const [buttonState, setButtonState] = useState(STATE_DEFAULT);
 
@@ -158,8 +157,8 @@ const SearchBar = () => {
     return (
         <React.Fragment>
             <Content>
-                <Input inputState={inputState}></Input>
-                <Button buttonState={buttonState} onClick={toggleState}></Button>
+                <Input inputState={inputState} color={color}></Input>
+                <Button buttonState={buttonState} color={color} onClick={toggleState}></Button>
             </Content>
         </React.Fragment>
     )
