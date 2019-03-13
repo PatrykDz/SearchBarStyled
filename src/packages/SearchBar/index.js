@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+const STATE_CLOSED = 'closed';
+const STATE_SQUARE = 'square';
+const STATE_DEFAULT = 'default';
+
 const Content =
     styled.div`
         position: absolute;
@@ -11,7 +15,6 @@ const Content =
         left: 50%;
         transform: translate(-50%, -50%);
         
-        /* .on ? */
         -webkit-animation-name: in-out;
         animation-name: in-out;
         -webkit-animation-duration: 0.7s;
@@ -43,8 +46,8 @@ const Input =
         -ms-transform: translate(-100%, -50%);
         transform: translate(-100%, -50%);
         
-        ${({inputState}) => {
-            if(inputState == 'square') { // phase == square
+        ${({ inputState }) => {
+            if (inputState == STATE_SQUARE) {
                 return `
                 box-sizing: border-box;
                 padding: 0 40px 0 10px;
@@ -67,8 +70,7 @@ const Input =
                 transform: translate(-100%, -50%);
                 `;
             }
-        }}
-        `;
+        }}`;
 
 const Button =
     styled.button`    
@@ -105,7 +107,7 @@ const Button =
             transition: 0.2s ease-in-out;}
             
         ${({ buttonState }) => {
-            if (buttonState == 'close') { // if phase is close
+            if (buttonState == STATE_CLOSED) {
                 return `color: green;
                         -webkit-transition: 0.4s ease-in-out;
                         transition: 0.4s ease-in-out;
@@ -125,21 +127,34 @@ const Button =
                             transform: rotate(45deg);
                             -webkit-transition: 0.2s ease-in-out;
                             transition: 0.2s ease-in-out;
+                        }
+                        
+                        &:after {
+                            content: "";
+                            position: absolute;
+                            width: 27px;
+                            height: 4px;
+                            background-color: #fff;
+                            margin-top: -1px;
+                            margin-left: -13px;
+                            cursor: pointer;
+                            -webkit-transform: rotate(-45deg);
+                            -ms-transform: rotate(-45deg);
+                            transform: rotate(-45deg);
                         }`
             }
         }}`;
 
 
 const SearchBar = () => {
+    const [inputState, setInputState] = useState(STATE_DEFAULT);
+    const [buttonState, setButtonState] = useState(STATE_DEFAULT);
 
-    const [inputState, setInputState] = useState('default'); // square
-    const [buttonState, setButtonState] = useState('default'); // close
-
-    const toggleState= () => {
-        setInputState(inputState == 'default' ? 'square' : 'default');
-        setButtonState(buttonState == 'default' ? 'close' : 'default');
+    const toggleState = () => {
+        setInputState(inputState == STATE_DEFAULT ? STATE_SQUARE : STATE_DEFAULT);
+        setButtonState(buttonState == STATE_DEFAULT ? STATE_CLOSED : STATE_DEFAULT);
     }
-    
+
     return (
         <React.Fragment>
             <Content>
